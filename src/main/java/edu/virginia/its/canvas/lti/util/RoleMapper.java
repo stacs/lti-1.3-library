@@ -2,7 +2,6 @@ package edu.virginia.its.canvas.lti.util;
 
 import com.nimbusds.jose.shaded.json.JSONArray;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -16,16 +15,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class RoleMapper implements GrantedAuthoritiesMapper {
 
-  private final Map<String, String> rolesMap;
+  private final Map<String, String> roleMappings;
 
-  public RoleMapper() {
-    this.rolesMap = new HashMap<>();
-    // Canvas does not differentiate between Account Admins and Subaccount Admins
-    this.rolesMap.put(Constants.LTI_ADMIN, Constants.ADMIN_ROLE);
-    // Canvas gives this role to TAs in addition to Teachers
-    this.rolesMap.put(Constants.LTI_INSTRUCTOR, Constants.INSTRUCTOR_ROLE);
-    this.rolesMap.put(Constants.LTI_TEACHING_ASSISTANT, Constants.TA_ROLE);
-    this.rolesMap.put(Constants.LTI_STUDENT, Constants.STUDENT_ROLE);
+  public RoleMapper(Map<String, String> roleMappings) {
+    this.roleMappings = roleMappings;
+    log.info("Using the following role mappings: {}", roleMappings);
   }
 
   @Override
@@ -38,7 +32,7 @@ public class RoleMapper implements GrantedAuthoritiesMapper {
       if (rolesObject instanceof JSONArray roles) {
         for (Object roleObject : roles.toArray()) {
           if (roleObject instanceof String role) {
-            String newRole = rolesMap.get(role);
+            String newRole = roleMappings.get(role);
             if (newRole != null) {
               newAuthorities.add(
                   new OidcUserAuthority(newRole, userAuth.getIdToken(), userAuth.getUserInfo()));
