@@ -53,4 +53,13 @@
             <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/stacs/maven-repos</url>
+        </repository>
+    </repositories>
 </project>
