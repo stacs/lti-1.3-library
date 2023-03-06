@@ -34,6 +34,11 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>uk.ac.ox.ctl</groupId>
+            <artifactId>spring-security-lti13</artifactId>
+            <version>0.1.3</version>
+        </dependency>
+        <dependency>
             <groupId>edu.virginia.its.lts</groupId>
             <artifactId>canvas-json-config</artifactId>
             <version>1.0.0-SNAPSHOT</version>
