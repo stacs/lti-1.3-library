@@ -3,8 +3,6 @@ package edu.virginia.its.canvas.lti.util;
 public final class Constants {
   private Constants() {}
 
-  public static final String LTI_ROLES_CLAIM = "https://purl.imsglobal.org/spec/lti/claim/roles";
-
   public static final String LTI_ADMIN =
       "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Administrator";
   public static final String LTI_INSTRUCTOR =

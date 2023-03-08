@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.stereotype.Component;
+import uk.ac.ox.ctl.lti13.lti.Claims;
 
 @Slf4j
 @Component
@@ -28,7 +29,7 @@ public class RoleMapper implements GrantedAuthoritiesMapper {
     Set<GrantedAuthority> newAuthorities = new HashSet<>(authorities);
     for (GrantedAuthority authority : authorities) {
       OidcUserAuthority userAuth = (OidcUserAuthority) authority;
-      Object rolesObject = userAuth.getAttributes().get(Constants.LTI_ROLES_CLAIM);
+      Object rolesObject = userAuth.getAttributes().get(Claims.ROLES);
       if (rolesObject instanceof JSONArray roles) {
         for (Object roleObject : roles.toArray()) {
           if (roleObject instanceof String role) {
