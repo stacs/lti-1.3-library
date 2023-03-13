@@ -1,9 +1,11 @@
 package edu.virginia.its.canvas.lti.util;
 
-import java.util.Map;
-
 import com.nimbusds.jose.shaded.json.JSONObject;
+import edu.virginia.its.canvas.lti.exception.CanvasTokenException;
+import java.util.Map;
 import lombok.Getter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import uk.ac.ox.ctl.lti13.lti.Claims;
 import uk.ac.ox.ctl.lti13.security.oauth2.client.lti.authentication.OidcAuthenticationToken;
 
@@ -44,5 +46,14 @@ public class CanvasAuthenticationToken extends OidcAuthenticationToken {
       return customJson.getAsString(customKey);
     }
     return null;
+  }
+
+  public static CanvasAuthenticationToken getToken() {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth instanceof OidcAuthenticationToken token) {
+      return new CanvasAuthenticationToken(token);
+    } else {
+      throw new CanvasTokenException("Could not find OidcAuthenticationToken");
+    }
   }
 }
