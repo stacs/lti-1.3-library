@@ -47,7 +47,7 @@ public class DBClientRegistrationRepository implements ClientRegistrationReposit
           .scope(OPENID_SCOPE)
           .userNameAttributeName(IdTokenClaimNames.SUB)
           .clientId(ltiRegistration.getClientId())
-          .clientSecret(ltiRegistration.getClientId())
+          .clientSecret(ltiRegistration.getClientSecret())
           .redirectUri(redirectUrl)
           .authorizationUri(ltiProvider.getAuthorizationUri())
           .jwkSetUri(ltiProvider.getJwkSetUri())
