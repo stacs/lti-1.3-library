@@ -67,4 +67,9 @@
             <url>https://maven.pkg.github.com/stacs/maven-repos</url>
         </repository>
     </repositories>
+    <scm>
+        <connection>scm:git:https://github.com/stacs/lti-1.3-library.git</connection>
+        <developerConnection>scm:git:https://github.com/stacs/lti-1.3-library.git</developerConnection>
+        <url>https://github.com/stacs/lti-1.3-library</url>
+    </scm>
 </project>
