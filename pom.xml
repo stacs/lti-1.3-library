@@ -5,7 +5,7 @@
     <parent>
         <groupId>edu.virginia.its.lts</groupId>
         <artifactId>parent-pom</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
     <artifactId>lti-13-library</artifactId>
     <version>1.0.0-SNAPSHOT</version>
@@ -41,7 +41,7 @@
         <dependency>
             <groupId>edu.virginia.its.lts</groupId>
             <artifactId>canvas-json-config</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
