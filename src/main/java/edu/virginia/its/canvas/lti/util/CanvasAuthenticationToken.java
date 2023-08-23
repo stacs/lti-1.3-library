@@ -23,6 +23,7 @@ public class CanvasAuthenticationToken extends OidcAuthenticationToken {
   private final String givenName;
   private final String familyName;
   private final String pictureUrl;
+  private final String locale;
 
   public CanvasAuthenticationToken(OidcAuthenticationToken token) {
     super(
@@ -38,6 +39,7 @@ public class CanvasAuthenticationToken extends OidcAuthenticationToken {
     this.givenName = attributes.get("given_name").toString();
     this.familyName = attributes.get("family_name").toString();
     this.pictureUrl = attributes.get("picture").toString();
+    this.locale = attributes.get("locale").toString();
   }
 
   public String getCustomValue(String customKey) {
