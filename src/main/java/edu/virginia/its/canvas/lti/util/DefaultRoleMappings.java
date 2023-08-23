@@ -1,7 +1,5 @@
 package edu.virginia.its.canvas.lti.util;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -14,9 +12,9 @@ import org.springframework.stereotype.Component;
 public final class DefaultRoleMappings {
 
   @Bean
-  @ConditionalOnMissingBean(name = "roleMappings")
-  public Map<String, String> roleMappings() {
-    Map<String, String> roleMappings = new HashMap<>();
+  @ConditionalOnMissingBean
+  public RolesMap roleMappings() {
+    RolesMap roleMappings = new RolesMap();
     // Canvas does not differentiate between Account Admins and Subaccount Admins
     roleMappings.put(Constants.LTI_ADMIN, Constants.ADMIN_ROLE);
     // Canvas gives this role to TAs in addition to Teachers

@@ -3,7 +3,6 @@ package edu.virginia.its.canvas.lti.util;
 import com.nimbusds.jose.shaded.json.JSONArray;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,9 +15,9 @@ import uk.ac.ox.ctl.lti13.lti.Claims;
 @Component
 public class RoleMapper implements GrantedAuthoritiesMapper {
 
-  private final Map<String, String> roleMappings;
+  private final RolesMap roleMappings;
 
-  public RoleMapper(Map<String, String> roleMappings) {
+  public RoleMapper(RolesMap roleMappings) {
     this.roleMappings = roleMappings;
     log.info("Using the following role mappings: {}", roleMappings);
   }
