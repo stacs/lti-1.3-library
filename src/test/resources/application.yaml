@@ -1,0 +1,21 @@
+server:
+  servlet:
+    context-path: /test
+
+spring:
+  datasource:
+    url: ${JDBC_DATABASE_URL:jdbc:h2:mem:test}
+    username: ${JDBC_DATABASE_USERNAME:sa}
+    password: ${JDBC_DATABASE_PASSWORD:password}
+  mvc:
+    servlet:
+      load-on-startup: 1
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: test
+
+ltitool:
+  baseUrl: https://localhost
+  toolName: lti-1.3-library
+  messageSourcePropertiesFiles: /messages/messages.properties,/messages/otherMessages.properties
