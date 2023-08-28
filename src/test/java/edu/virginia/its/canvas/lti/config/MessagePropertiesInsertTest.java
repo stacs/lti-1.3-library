@@ -26,6 +26,8 @@ public class MessagePropertiesInsertTest {
     assertNotNull(message);
     assertEquals("test1", message.getMessage());
     assertEquals("lti-1.3-library", message.getToolName());
+    assertEquals("SYSTEM", message.getCreatedBy());
+    assertEquals("SYSTEM", message.getLastUpdatedBy());
     message =
         messages.stream()
             .filter(m -> "en_US".equals(m.getLocale()) && "test2".equals(m.getMessageKey()))
@@ -34,6 +36,8 @@ public class MessagePropertiesInsertTest {
     assertNotNull(message);
     assertEquals("test2", message.getMessage());
     assertEquals("lti-1.3-library", message.getToolName());
+    assertEquals("SYSTEM", message.getCreatedBy());
+    assertEquals("SYSTEM", message.getLastUpdatedBy());
     message =
         messages.stream()
             .filter(m -> "en_US".equals(m.getLocale()) && "test3".equals(m.getMessageKey()))
@@ -42,6 +46,8 @@ public class MessagePropertiesInsertTest {
     assertNotNull(message);
     assertEquals("test3", message.getMessage());
     assertEquals("lti-1.3-library", message.getToolName());
+    assertEquals("SYSTEM", message.getCreatedBy());
+    assertEquals("SYSTEM", message.getLastUpdatedBy());
     message =
         messages.stream()
             .filter(m -> "es_ES".equals(m.getLocale()) && "test1".equals(m.getMessageKey()))
@@ -50,6 +56,8 @@ public class MessagePropertiesInsertTest {
     assertNotNull(message);
     assertEquals("test1-es", message.getMessage());
     assertEquals("lti-1.3-library", message.getToolName());
+    assertEquals("SYSTEM", message.getCreatedBy());
+    assertEquals("SYSTEM", message.getLastUpdatedBy());
     message =
         messages.stream()
             .filter(m -> "es_ES".equals(m.getLocale()) && "test2".equals(m.getMessageKey()))
@@ -58,6 +66,8 @@ public class MessagePropertiesInsertTest {
     assertNotNull(message);
     assertEquals("test2-es", message.getMessage());
     assertEquals("lti-1.3-library", message.getToolName());
+    assertEquals("SYSTEM", message.getCreatedBy());
+    assertEquals("SYSTEM", message.getLastUpdatedBy());
     message =
         messages.stream()
             .filter(m -> "es_ES".equals(m.getLocale()) && "test3".equals(m.getMessageKey()))
@@ -66,6 +76,8 @@ public class MessagePropertiesInsertTest {
     assertNotNull(message);
     assertEquals("test3-es", message.getMessage());
     assertEquals("lti-1.3-library", message.getToolName());
+    assertEquals("SYSTEM", message.getCreatedBy());
+    assertEquals("SYSTEM", message.getLastUpdatedBy());
 
     message =
         messages.stream()
@@ -75,6 +87,8 @@ public class MessagePropertiesInsertTest {
     assertNotNull(message);
     assertEquals("otherTest1", message.getMessage());
     assertEquals("lti-1.3-library", message.getToolName());
+    assertEquals("SYSTEM", message.getCreatedBy());
+    assertEquals("SYSTEM", message.getLastUpdatedBy());
     message =
         messages.stream()
             .filter(m -> "en_US".equals(m.getLocale()) && "other.test2".equals(m.getMessageKey()))
@@ -83,6 +97,8 @@ public class MessagePropertiesInsertTest {
     assertNotNull(message);
     assertEquals("otherTest2", message.getMessage());
     assertEquals("lti-1.3-library", message.getToolName());
+    assertEquals("SYSTEM", message.getCreatedBy());
+    assertEquals("SYSTEM", message.getLastUpdatedBy());
     message =
         messages.stream()
             .filter(m -> "en_US".equals(m.getLocale()) && "other.test3".equals(m.getMessageKey()))
@@ -91,6 +107,8 @@ public class MessagePropertiesInsertTest {
     assertNotNull(message);
     assertEquals("otherTest3", message.getMessage());
     assertEquals("lti-1.3-library", message.getToolName());
+    assertEquals("SYSTEM", message.getCreatedBy());
+    assertEquals("SYSTEM", message.getLastUpdatedBy());
     message =
         messages.stream()
             .filter(m -> "es_ES".equals(m.getLocale()) && "other.test1".equals(m.getMessageKey()))
@@ -99,6 +117,8 @@ public class MessagePropertiesInsertTest {
     assertNotNull(message);
     assertEquals("otherTest1-es", message.getMessage());
     assertEquals("lti-1.3-library", message.getToolName());
+    assertEquals("SYSTEM", message.getCreatedBy());
+    assertEquals("SYSTEM", message.getLastUpdatedBy());
     message =
         messages.stream()
             .filter(m -> "es_ES".equals(m.getLocale()) && "other.test2".equals(m.getMessageKey()))
@@ -107,6 +127,8 @@ public class MessagePropertiesInsertTest {
     assertNotNull(message);
     assertEquals("otherTest2-es", message.getMessage());
     assertEquals("lti-1.3-library", message.getToolName());
+    assertEquals("SYSTEM", message.getCreatedBy());
+    assertEquals("SYSTEM", message.getLastUpdatedBy());
     message =
         messages.stream()
             .filter(m -> "es_ES".equals(m.getLocale()) && "other.test3".equals(m.getMessageKey()))
@@ -115,5 +137,7 @@ public class MessagePropertiesInsertTest {
     assertNotNull(message);
     assertEquals("otherTest3-es", message.getMessage());
     assertEquals("lti-1.3-library", message.getToolName());
+    assertEquals("SYSTEM", message.getCreatedBy());
+    assertEquals("SYSTEM", message.getLastUpdatedBy());
   }
 }
