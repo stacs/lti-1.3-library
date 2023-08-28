@@ -74,7 +74,10 @@ public class MessagePropertiesInsert {
           propertiesMap.forEach(
               (key, value) -> {
                 if (!foundKeys.contains(key)) {
-                  newMessages.add(new Message(toolName, key, value, locale));
+                  Message message = new Message(toolName, key, value, value, locale);
+                  message.setCreatedBy("SYSTEM");
+                  message.setLastUpdatedBy("SYSTEM");
+                  newMessages.add(message);
                 }
               });
           if (!newMessages.isEmpty()) {

@@ -34,7 +34,8 @@ public class DBClientRegistrationRepository implements ClientRegistrationReposit
   @Override
   public ClientRegistration findByRegistrationId(String registrationId) {
     String redirectUrl = baseUrl + contextPath + redirectPath;
-    // The default registration ID is the maven artifact ID of the Tool
+    // The default registration ID is the toolName which gets set in the application file of the
+    // Tool
     LtiRegistration ltiRegistration = repo.findByName(registrationId);
     if (ltiRegistration != null) {
       LtiProvider ltiProvider = ltiRegistration.getLtiProvider();
