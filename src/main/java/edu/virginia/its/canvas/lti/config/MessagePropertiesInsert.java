@@ -66,23 +66,41 @@ public class MessagePropertiesInsert {
           String locale = getLocale(messagePropertiesFile);
           Map<String, String> propertiesMap = new HashMap<>();
           properties.forEach((k, v) -> propertiesMap.put((String) k, (String) v));
+          List<Message> existingMessages = messageRepo.findAllByToolNameAndLocale(toolName, locale);
+          log.info("existingMessages: {}", existingMessages);
           Set<String> foundKeys =
-              messageRepo.findAllByToolNameAndLocale(toolName, locale).stream()
-                  .map(Message::getMessageKey)
-                  .collect(Collectors.toSet());
-          List<Message> newMessages = new ArrayList<>();
+              existingMessages.stream().map(Message::getMessageKey).collect(Collectors.toSet());
+          List<Message> messagesToAdd = new ArrayList<>();
+          List<Message> messagesToUpdate = new ArrayList<>();
           propertiesMap.forEach(
               (key, value) -> {
                 if (!foundKeys.contains(key)) {
                   Message message = new Message(toolName, key, value, value, locale);
-                  message.setCreatedBy("SYSTEM");
-                  message.setLastUpdatedBy("SYSTEM");
-                  newMessages.add(message);
+                  message.setCreatedBy(Constants.SYSTEM_USER);
+                  message.setLastUpdatedBy(Constants.SYSTEM_USER);
+                  messagesToAdd.add(message);
+                } else {
+                  Message message =
+                      existingMessages.stream()
+                          .filter(m -> m.getMessageKey().equals(key))
+                          .findFirst()
+                          .orElse(null);
+                  log.info("message: {}", message);
+                  if (message != null && !message.getDefaultMessage().equals(value)) {
+                    message.setDefaultMessage(value);
+                    message.setLastUpdatedBy(Constants.SYSTEM_USER);
+                    messagesToUpdate.add(message);
+                  }
                 }
               });
-          if (!newMessages.isEmpty()) {
-            messageRepo.saveAll(newMessages);
-            log.info("Inserted {} messages into the DB", newMessages.size());
+          if (!messagesToAdd.isEmpty()) {
+            log.info("messagesToAdd: {}", messagesToAdd);
+            messageRepo.saveAll(messagesToAdd);
+            log.info("Inserted {} messages into the DB", messagesToAdd.size());
+          }
+          if (!messagesToUpdate.isEmpty()) {
+            messageRepo.saveAll(messagesToUpdate);
+            log.info("Updated {} messages in the DB", messagesToUpdate.size());
           }
         } else {
           log.warn("Could not find '{}' file", messagePropertiesFile);
