@@ -5,6 +5,8 @@ import java.util.Locale;
 public final class Constants {
   private Constants() {}
 
+  public static final String SYSTEM_USER = "SYSTEM";
+
   public static final String LTI_ADMIN =
       "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Administrator";
   public static final String LTI_INSTRUCTOR =

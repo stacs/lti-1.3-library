@@ -25,6 +25,7 @@ public class MessagePropertiesInsertTest {
             .orElse(null);
     assertNotNull(message);
     assertEquals("test1", message.getMessage());
+    assertEquals("test1", message.getDefaultMessage());
     assertEquals("lti-1.3-library", message.getToolName());
     assertEquals("SYSTEM", message.getCreatedBy());
     assertEquals("SYSTEM", message.getLastUpdatedBy());
@@ -34,7 +35,8 @@ public class MessagePropertiesInsertTest {
             .findFirst()
             .orElse(null);
     assertNotNull(message);
-    assertEquals("test2", message.getMessage());
+    assertEquals("preExistingMessage", message.getMessage());
+    assertEquals("test2", message.getDefaultMessage());
     assertEquals("lti-1.3-library", message.getToolName());
     assertEquals("SYSTEM", message.getCreatedBy());
     assertEquals("SYSTEM", message.getLastUpdatedBy());
@@ -45,6 +47,7 @@ public class MessagePropertiesInsertTest {
             .orElse(null);
     assertNotNull(message);
     assertEquals("test3", message.getMessage());
+    assertEquals("test3", message.getDefaultMessage());
     assertEquals("lti-1.3-library", message.getToolName());
     assertEquals("SYSTEM", message.getCreatedBy());
     assertEquals("SYSTEM", message.getLastUpdatedBy());
@@ -55,6 +58,7 @@ public class MessagePropertiesInsertTest {
             .orElse(null);
     assertNotNull(message);
     assertEquals("test1-es", message.getMessage());
+    assertEquals("test1-es", message.getDefaultMessage());
     assertEquals("lti-1.3-library", message.getToolName());
     assertEquals("SYSTEM", message.getCreatedBy());
     assertEquals("SYSTEM", message.getLastUpdatedBy());
@@ -65,6 +69,7 @@ public class MessagePropertiesInsertTest {
             .orElse(null);
     assertNotNull(message);
     assertEquals("test2-es", message.getMessage());
+    assertEquals("test2-es", message.getDefaultMessage());
     assertEquals("lti-1.3-library", message.getToolName());
     assertEquals("SYSTEM", message.getCreatedBy());
     assertEquals("SYSTEM", message.getLastUpdatedBy());
@@ -75,6 +80,7 @@ public class MessagePropertiesInsertTest {
             .orElse(null);
     assertNotNull(message);
     assertEquals("test3-es", message.getMessage());
+    assertEquals("test3-es", message.getDefaultMessage());
     assertEquals("lti-1.3-library", message.getToolName());
     assertEquals("SYSTEM", message.getCreatedBy());
     assertEquals("SYSTEM", message.getLastUpdatedBy());
@@ -86,6 +92,7 @@ public class MessagePropertiesInsertTest {
             .orElse(null);
     assertNotNull(message);
     assertEquals("otherTest1", message.getMessage());
+    assertEquals("otherTest1", message.getDefaultMessage());
     assertEquals("lti-1.3-library", message.getToolName());
     assertEquals("SYSTEM", message.getCreatedBy());
     assertEquals("SYSTEM", message.getLastUpdatedBy());
@@ -96,6 +103,7 @@ public class MessagePropertiesInsertTest {
             .orElse(null);
     assertNotNull(message);
     assertEquals("otherTest2", message.getMessage());
+    assertEquals("otherTest2", message.getDefaultMessage());
     assertEquals("lti-1.3-library", message.getToolName());
     assertEquals("SYSTEM", message.getCreatedBy());
     assertEquals("SYSTEM", message.getLastUpdatedBy());
@@ -106,6 +114,7 @@ public class MessagePropertiesInsertTest {
             .orElse(null);
     assertNotNull(message);
     assertEquals("otherTest3", message.getMessage());
+    assertEquals("otherTest3", message.getDefaultMessage());
     assertEquals("lti-1.3-library", message.getToolName());
     assertEquals("SYSTEM", message.getCreatedBy());
     assertEquals("SYSTEM", message.getLastUpdatedBy());
@@ -115,7 +124,8 @@ public class MessagePropertiesInsertTest {
             .findFirst()
             .orElse(null);
     assertNotNull(message);
-    assertEquals("otherTest1-es", message.getMessage());
+    assertEquals("anotherPreExistingMessage", message.getMessage());
+    assertEquals("otherTest1-es", message.getDefaultMessage());
     assertEquals("lti-1.3-library", message.getToolName());
     assertEquals("SYSTEM", message.getCreatedBy());
     assertEquals("SYSTEM", message.getLastUpdatedBy());
@@ -126,6 +136,7 @@ public class MessagePropertiesInsertTest {
             .orElse(null);
     assertNotNull(message);
     assertEquals("otherTest2-es", message.getMessage());
+    assertEquals("otherTest2-es", message.getDefaultMessage());
     assertEquals("lti-1.3-library", message.getToolName());
     assertEquals("SYSTEM", message.getCreatedBy());
     assertEquals("SYSTEM", message.getLastUpdatedBy());
@@ -136,6 +147,7 @@ public class MessagePropertiesInsertTest {
             .orElse(null);
     assertNotNull(message);
     assertEquals("otherTest3-es", message.getMessage());
+    assertEquals("otherTest3-es", message.getDefaultMessage());
     assertEquals("lti-1.3-library", message.getToolName());
     assertEquals("SYSTEM", message.getCreatedBy());
     assertEquals("SYSTEM", message.getLastUpdatedBy());
