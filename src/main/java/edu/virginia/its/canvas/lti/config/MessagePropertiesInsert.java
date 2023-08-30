@@ -67,7 +67,6 @@ public class MessagePropertiesInsert {
           Map<String, String> propertiesMap = new HashMap<>();
           properties.forEach((k, v) -> propertiesMap.put((String) k, (String) v));
           List<Message> existingMessages = messageRepo.findAllByToolNameAndLocale(toolName, locale);
-          log.info("existingMessages: {}", existingMessages);
           Set<String> foundKeys =
               existingMessages.stream().map(Message::getMessageKey).collect(Collectors.toSet());
           List<Message> messagesToAdd = new ArrayList<>();
@@ -85,7 +84,6 @@ public class MessagePropertiesInsert {
                           .filter(m -> m.getMessageKey().equals(key))
                           .findFirst()
                           .orElse(null);
-                  log.info("message: {}", message);
                   if (message != null && !message.getDefaultMessage().equals(value)) {
                     message.setDefaultMessage(value);
                     message.setLastUpdatedBy(Constants.SYSTEM_USER);
@@ -94,7 +92,6 @@ public class MessagePropertiesInsert {
                 }
               });
           if (!messagesToAdd.isEmpty()) {
-            log.info("messagesToAdd: {}", messagesToAdd);
             messageRepo.saveAll(messagesToAdd);
             log.info("Inserted {} messages into the DB", messagesToAdd.size());
           }
