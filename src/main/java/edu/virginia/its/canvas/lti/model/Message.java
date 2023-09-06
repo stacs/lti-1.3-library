@@ -45,10 +45,10 @@ public class Message {
   @Column(nullable = false)
   private String messageKey;
 
-  @Column(nullable = false)
+  @Column(nullable = false, columnDefinition = "TEXT")
   private String message;
 
-  @Column(nullable = false)
+  @Column(nullable = false, columnDefinition = "TEXT")
   private String defaultMessage;
 
   @Column(nullable = false)
