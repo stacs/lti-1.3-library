@@ -20,7 +20,7 @@ public final class DefaultRoleMappings {
     // Canvas gives this role to TAs in addition to Teachers
     roleMappings.put(Constants.LTI_INSTRUCTOR, Constants.INSTRUCTOR_ROLE);
     roleMappings.put(Constants.LTI_TEACHING_ASSISTANT, Constants.TA_ROLE);
-    roleMappings.put(Constants.LTI_STUDENT, Constants.STUDENT_ROLE);
+    roleMappings.put(Constants.LTI_LEARNER, Constants.STUDENT_ROLE);
     return roleMappings;
   }
 }
