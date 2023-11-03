@@ -51,7 +51,8 @@ public class MessagePropertiesInsert {
 
   @PostConstruct
   public void postConstruct() {
-    // Transactions (which are needed for 'deleteByToolName()') aren't ready by default in PostConstruct,
+    // Transactions (which are needed for 'deleteByToolName()') aren't ready by default in
+    // PostConstruct,
     // so we use a callback to ensure we can run transactions for 'insertMessagesIntoDatabase()'.
     TransactionTemplate tmpl = new TransactionTemplate(txManager);
     tmpl.execute(
