@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MessageRepo extends JpaRepository<Message, Long> {
+
+  long deleteByToolName(String toolName);
+
   List<Message> findAllByToolNameAndLocale(String toolName, String locale);
 
   Message findByToolNameAndMessageKeyAndLocale(String toolName, String messageKey, String locale);

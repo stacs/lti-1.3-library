@@ -21,7 +21,7 @@ public final class Constants {
   public static final String TA_ROLE = "ROLE_TA";
   public static final String STUDENT_ROLE = "ROLE_STUDENT";
 
-  public static final Locale DEFAULT_LOCALE = Locale.US;
+  public static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
   public static final String CANVAS_LINK_HEADER = "link";
   public static final String USERNAME_CUSTOM_KEY = "username";

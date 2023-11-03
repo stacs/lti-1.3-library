@@ -14,11 +14,16 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.ObjectUtils;
 
 @Component
@@ -31,15 +36,42 @@ public class MessagePropertiesInsert {
 
   @Autowired private MessageRepo messageRepo;
 
+  @Autowired
+  @Qualifier("transactionManager")
+  protected PlatformTransactionManager txManager;
+
   @Value("${ltitool.toolName}")
   private String toolName;
 
   @Value("${ltitool.messageSourcePropertiesFiles:/messages/messages.properties}")
   private List<String> messageSourcePropertiesFiles;
 
+  @Value("${ltitool.resetMessages:false}")
+  private boolean resetMessages;
+
   @PostConstruct
+  public void postConstruct() {
+    // Transactions (which are needed for 'deleteByToolName()') aren't ready by default in PostConstruct,
+    // so we use a callback to ensure we can run transactions for 'insertMessagesIntoDatabase()'.
+    TransactionTemplate tmpl = new TransactionTemplate(txManager);
+    tmpl.execute(
+        new TransactionCallbackWithoutResult() {
+          @Override
+          protected void doInTransactionWithoutResult(TransactionStatus status) {
+            insertMessagesIntoDatabase();
+          }
+        });
+  }
+
   public void insertMessagesIntoDatabase() {
     log.info("Starting insertMessagesIntoDatabase()");
+    if (resetMessages) {
+      long deletedNumber = messageRepo.deleteByToolName(toolName);
+      log.info(
+          "The resetMessages property was set to true, '{}' messages were deleted from the DB for toolName '{}'",
+          deletedNumber,
+          toolName);
+    }
     for (String messageSourcePropertiesFile : messageSourcePropertiesFiles) {
       String fileLookupString = messageSourcePropertiesFile.replace(".properties", "*.properties");
       Resource[] resources = new Resource[0];
@@ -84,7 +116,8 @@ public class MessagePropertiesInsert {
                           .filter(m -> m.getMessageKey().equals(key))
                           .findFirst()
                           .orElse(null);
-                  if (message != null && !message.getDefaultMessage().equals(value)) {
+                  if (message != null
+                      && (resetMessages || !message.getDefaultMessage().equals(value))) {
                     message.setDefaultMessage(value);
                     message.setLastUpdatedBy(Constants.SYSTEM_USER);
                     messagesToUpdate.add(message);
