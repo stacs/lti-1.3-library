@@ -20,7 +20,7 @@ public class MessagePropertiesInsertTest {
     assertEquals(12, messages.size());
     Message message =
         messages.stream()
-            .filter(m -> "en_US".equals(m.getLocale()) && "test1".equals(m.getMessageKey()))
+            .filter(m -> "en".equals(m.getLocale()) && "test1".equals(m.getMessageKey()))
             .findFirst()
             .orElse(null);
     assertNotNull(message);
@@ -31,7 +31,7 @@ public class MessagePropertiesInsertTest {
     assertEquals("SYSTEM", message.getLastUpdatedBy());
     message =
         messages.stream()
-            .filter(m -> "en_US".equals(m.getLocale()) && "test2".equals(m.getMessageKey()))
+            .filter(m -> "en".equals(m.getLocale()) && "test2".equals(m.getMessageKey()))
             .findFirst()
             .orElse(null);
     assertNotNull(message);
@@ -42,7 +42,7 @@ public class MessagePropertiesInsertTest {
     assertEquals("SYSTEM", message.getLastUpdatedBy());
     message =
         messages.stream()
-            .filter(m -> "en_US".equals(m.getLocale()) && "test3".equals(m.getMessageKey()))
+            .filter(m -> "en".equals(m.getLocale()) && "test3".equals(m.getMessageKey()))
             .findFirst()
             .orElse(null);
     assertNotNull(message);
@@ -87,7 +87,7 @@ public class MessagePropertiesInsertTest {
 
     message =
         messages.stream()
-            .filter(m -> "en_US".equals(m.getLocale()) && "other.test1".equals(m.getMessageKey()))
+            .filter(m -> "en".equals(m.getLocale()) && "other.test1".equals(m.getMessageKey()))
             .findFirst()
             .orElse(null);
     assertNotNull(message);
@@ -98,7 +98,7 @@ public class MessagePropertiesInsertTest {
     assertEquals("SYSTEM", message.getLastUpdatedBy());
     message =
         messages.stream()
-            .filter(m -> "en_US".equals(m.getLocale()) && "other.test2".equals(m.getMessageKey()))
+            .filter(m -> "en".equals(m.getLocale()) && "other.test2".equals(m.getMessageKey()))
             .findFirst()
             .orElse(null);
     assertNotNull(message);
@@ -109,7 +109,7 @@ public class MessagePropertiesInsertTest {
     assertEquals("SYSTEM", message.getLastUpdatedBy());
     message =
         messages.stream()
-            .filter(m -> "en_US".equals(m.getLocale()) && "other.test3".equals(m.getMessageKey()))
+            .filter(m -> "en".equals(m.getLocale()) && "other.test3".equals(m.getMessageKey()))
             .findFirst()
             .orElse(null);
     assertNotNull(message);
