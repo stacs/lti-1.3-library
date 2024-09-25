@@ -1,9 +1,9 @@
 package edu.virginia.its.canvas.lti.util;
 
-import com.nimbusds.jose.shaded.json.JSONObject;
 import edu.virginia.its.canvas.lti.exception.CanvasTokenException;
 import java.util.Map;
 import lombok.Getter;
+import net.minidev.json.JSONObject;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import uk.ac.ox.ctl.lti13.lti.Claims;

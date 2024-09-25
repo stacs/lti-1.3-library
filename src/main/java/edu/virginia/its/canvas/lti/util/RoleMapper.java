@@ -1,10 +1,10 @@
 package edu.virginia.its.canvas.lti.util;
 
-import com.nimbusds.jose.shaded.json.JSONArray;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONArray;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
