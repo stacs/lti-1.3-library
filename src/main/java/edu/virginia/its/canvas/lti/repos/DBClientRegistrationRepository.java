@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
+import uk.ac.ox.ctl.lti13.security.oauth2.client.lti.web.LTIAuthorizationGrantType;
 
 /**
  * An implementation of ClientRegistrationRepository that can get a ClientRegistration from a
@@ -42,9 +42,10 @@ public class DBClientRegistrationRepository implements ClientRegistrationReposit
       // This configures the registration information that the Tool (our LTI app) must store about
       // the Platform (Canvas)
       return ClientRegistration.withRegistrationId(registrationId)
-          // The toolKey String needs to match the end path value for the oidc_initiation_url
-          // configured in Canvas
-          .authorizationGrantType(AuthorizationGrantType.IMPLICIT)
+          // Spring 6 no longer natively supports the IMPLICIT grant, so we grab a version of the
+          // IMPLICIT grant type provided by the spring-security-lti13 library (internally it
+          // performs an AUTHORIZATION_CODE grant).
+          .authorizationGrantType(LTIAuthorizationGrantType.IMPLICIT)
           .scope(OPENID_SCOPE)
           .userNameAttributeName(IdTokenClaimNames.SUB)
           .clientId(ltiRegistration.getClientId())
