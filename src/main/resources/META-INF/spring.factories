@@ -1,1 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=edu.virginia.its.canvas.lti.LtiConfig
