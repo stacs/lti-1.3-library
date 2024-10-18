@@ -24,7 +24,7 @@ public class UserWhitelistAuthorizationService {
   @Value("${ltitool.allowedUserEmails:}")
   private List<String> c;
 
-  @Value("${ltitool.allowedUserEmails}")
+  @Value("${ltitool.allowedUserEmails:}")
   private String d;
 
   public UserWhitelistAuthorizationService() {
