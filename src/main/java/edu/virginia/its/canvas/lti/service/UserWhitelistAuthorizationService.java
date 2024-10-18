@@ -1,6 +1,6 @@
 package edu.virginia.its.canvas.lti.service;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,11 +19,10 @@ import org.springframework.stereotype.Service;
 public class UserWhitelistAuthorizationService {
 
   @Value("${ltitool.allowedUserEmails:}")
-  private String[] allowedUserEmails = new String[0];
+  private List<String> allowedUserEmails = new ArrayList<>();
 
   public UserWhitelistAuthorizationService() {
-    log.info("allowedUserEmails: {}", (Object) allowedUserEmails);
-    log.info("Arrays.toString(allowedUserEmails): {}", Arrays.toString(allowedUserEmails));
+    log.info("allowedUserEmails: {}", allowedUserEmails);
   }
 
   public boolean isUserAllowed(Object principalObject) {
@@ -31,10 +30,8 @@ public class UserWhitelistAuthorizationService {
     log.info("principalObject: {}", principalObject);
     if (principalObject instanceof OAuth2User principal) {
       log.info("principal.getAttributes(): {}", principal.getAttributes());
-      List<String> allowedUserEmailsList = Arrays.asList(allowedUserEmails);
-      log.info("allowedUserEmailsList: {}", allowedUserEmailsList);
       String email = principal.getAttributes().get("email").toString();
-      return email != null && allowedUserEmailsList.contains(email);
+      return email != null && allowedUserEmails.contains(email);
     }
     return false;
   }
