@@ -21,8 +21,20 @@ public class UserWhitelistAuthorizationService {
   @Value("${ltitool.allowedUserEmails:}")
   private List<String> allowedUserEmails = new ArrayList<>();
 
+  @Value("${ltitool.allowedUserEmails}")
+  private List<String> b = new ArrayList<>();
+
+  @Value("${ltitool.allowedUserEmails:}")
+  private List<String> c;
+
+  @Value("${ltitool.allowedUserEmails}")
+  private String d;
+
   public UserWhitelistAuthorizationService() {
     log.info("allowedUserEmails: {}", allowedUserEmails);
+    log.info("b: {}", b);
+    log.info("c: {}", c);
+    log.info("d: {}", d);
   }
 
   public boolean isUserAllowed(Object principalObject) {
