@@ -36,7 +36,9 @@ public class UserWhitelistAuthorizationService {
     if (principalObject instanceof OAuth2User principal) {
       log.info("principal.getAttributes(): {}", principal.getAttributes());
       String email = principal.getAttributes().get("email").toString();
-      log.info("email != null && allowedUserEmails.contains(email): {}", (email != null && allowedUserEmails.contains(email)));
+      log.info(
+          "email != null && allowedUserEmails.contains(email): {}",
+          (email != null && allowedUserEmails.contains(email)));
       return email != null && allowedUserEmails.contains(email);
     }
     return false;
