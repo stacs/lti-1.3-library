@@ -2,6 +2,7 @@ package edu.virginia.its.canvas.lti.service;
 
 import java.util.Arrays;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -13,15 +14,25 @@ import org.springframework.stereotype.Service;
  * Canvas sends the Admin role regardless if the admin is a root admin or sub-account admin, so we
  * check against the user email whitelist we create to make sure they are allowed access.
  */
+@Slf4j
 @Service
 public class UserWhitelistAuthorizationService {
 
   @Value("${ltitool.allowedUserEmails:}")
   private String[] allowedUserEmails = new String[0];
 
+  public UserWhitelistAuthorizationService() {
+    log.info("allowedUserEmails: {}", (Object) allowedUserEmails);
+    log.info("Arrays.toString(allowedUserEmails): {}", Arrays.toString(allowedUserEmails));
+  }
+
   public boolean isUserAllowed(Object principalObject) {
+    log.info("isUserAllowed()");
+    log.info("principalObject: {}", principalObject);
     if (principalObject instanceof OAuth2User principal) {
+      log.info("principal.getAttributes(): {}", principal.getAttributes());
       List<String> allowedUserEmailsList = Arrays.asList(allowedUserEmails);
+      log.info("allowedUserEmailsList: {}", allowedUserEmailsList);
       String email = principal.getAttributes().get("email").toString();
       return email != null && allowedUserEmailsList.contains(email);
     }
