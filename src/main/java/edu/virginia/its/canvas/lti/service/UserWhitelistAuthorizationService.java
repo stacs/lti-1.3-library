@@ -27,14 +27,11 @@ public class UserWhitelistAuthorizationService {
   @Value("${ltitool.allowedUserEmails:}")
   private String d;
 
-  public UserWhitelistAuthorizationService() {
+  public boolean isUserAllowed(Object principalObject) {
+    log.info("isUserAllowed()");
     log.info("allowedUserEmails: {}", allowedUserEmails);
     log.info("c: {}", c);
     log.info("d: {}", d);
-  }
-
-  public boolean isUserAllowed(Object principalObject) {
-    log.info("isUserAllowed()");
     log.info("principalObject: {}", principalObject);
     if (principalObject instanceof OAuth2User principal) {
       log.info("principal.getAttributes(): {}", principal.getAttributes());
