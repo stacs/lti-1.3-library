@@ -1,9 +1,9 @@
 package edu.virginia.its.canvas.lti.util;
 
+import com.nimbusds.jose.shaded.gson.internal.LinkedTreeMap;
 import edu.virginia.its.canvas.lti.exception.CanvasTokenException;
 import java.util.Map;
 import lombok.Getter;
-import net.minidev.json.JSONObject;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import uk.ac.ox.ctl.lti13.lti.Claims;
@@ -44,8 +44,9 @@ public class CanvasAuthenticationToken extends OidcAuthenticationToken {
 
   public String getCustomValue(String customKey) {
     Object customAttributes = attributes.get(Claims.CUSTOM);
-    if (customAttributes instanceof JSONObject customJson) {
-      return customJson.getAsString(customKey);
+    if (customAttributes instanceof LinkedTreeMap customMap) {
+      // LTI 1.3 spec section 5.4.6 says all Custom values need to be a String
+      return (String) customMap.get(customKey);
     }
     return null;
   }
