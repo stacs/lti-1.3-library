@@ -1,4 +1,4 @@
-package edu.virginia.its.canvas.lti.util;
+package edu.virginia.its.canvas.lti.roles;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -13,13 +13,13 @@ import uk.ac.ox.ctl.lti13.lti.Claims;
 
 @Slf4j
 @Component
-public class RoleMapper implements GrantedAuthoritiesMapper {
+public class LtiRoleMapper implements GrantedAuthoritiesMapper {
 
-  private final RolesMap roleMappings;
+  private final LtiRolesMap ltiRoleMappings;
 
-  public RoleMapper(RolesMap roleMappings) {
-    this.roleMappings = roleMappings;
-    log.info("Using the following role mappings: {}", roleMappings);
+  public LtiRoleMapper(LtiRolesMap ltiRoleMappings) {
+    this.ltiRoleMappings = ltiRoleMappings;
+    log.info("Using the following LTI role mappings: {}", ltiRoleMappings);
   }
 
   @Override
@@ -32,7 +32,7 @@ public class RoleMapper implements GrantedAuthoritiesMapper {
       if (rolesObject instanceof List roles) {
         for (Object roleObject : roles) {
           if (roleObject instanceof String role) {
-            String newRole = roleMappings.get(role);
+            String newRole = ltiRoleMappings.get(role);
             if (newRole != null) {
               newAuthorities.add(
                   new OidcUserAuthority(newRole, userAuth.getIdToken(), userAuth.getUserInfo()));
