@@ -1,20 +1,21 @@
-package edu.virginia.its.canvas.lti.util;
+package edu.virginia.its.canvas.lti.roles;
 
+import edu.virginia.its.canvas.lti.util.Constants;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
  * This class provides some default role mappings between LTI roles and Spring Security roles. A
- * tool can override this by providing their own @Bean named 'roleMappings'.
+ * tool can override this by providing their own @Bean named 'ltiRoleMappings'.
  */
 @Component
-public final class DefaultRoleMappings {
+public final class DefaultLtiRoleMappings {
 
   @Bean
   @ConditionalOnMissingBean
-  public RolesMap roleMappings() {
-    RolesMap roleMappings = new RolesMap();
+  public LtiRolesMap ltiRoleMappings() {
+    LtiRolesMap roleMappings = new LtiRolesMap();
     // Canvas does not differentiate between Account Admins and Subaccount Admins
     roleMappings.put(Constants.LTI_ADMIN, Constants.ADMIN_ROLE);
     // Canvas gives this role to TAs in addition to Teachers
