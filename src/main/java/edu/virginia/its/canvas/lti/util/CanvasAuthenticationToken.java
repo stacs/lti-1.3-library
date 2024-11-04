@@ -46,7 +46,10 @@ public class CanvasAuthenticationToken extends OidcAuthenticationToken {
     Object customAttributes = attributes.get(Claims.CUSTOM);
     if (customAttributes instanceof LinkedTreeMap customMap) {
       // LTI 1.3 spec section 5.4.6 says all Custom values need to be a String
-      return (String) customMap.get(customKey);
+      Object obj = customMap.get(customKey);
+      if (obj != null) {
+        return String.valueOf(obj);
+      }
     }
     return null;
   }
