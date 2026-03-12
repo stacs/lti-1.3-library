@@ -4,7 +4,7 @@
     <parent>
         <groupId>edu.virginia.its.lts</groupId>
         <artifactId>parent-pom</artifactId>
-        <version>2.0.0</version>
+        <version>4.0.3</version>
     </parent>
     <artifactId>lti-13-library</artifactId>
     <version>2.0.1-SNAPSHOT</version>
