@@ -1,0 +1,15 @@
+version: 2
+
+registries:
+  github:
+    type: "maven-repository"
+    url: "https://maven.pkg.github.com/stacs/maven-repo"
+    username: "x-access-token"
+    password: ${{secrets.DEPLOY_GITHUB_TOKEN}}
+updates:
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    registries:
+      - github
