@@ -13,7 +13,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -30,24 +29,31 @@ import org.springframework.util.ObjectUtils;
 @Slf4j
 public class MessagePropertiesInsert {
 
-  @Autowired private ResourceLoader resourceLoader;
+  private final ResourceLoader resourceLoader;
+  private final ApplicationContext applicationContext;
+  private final MessageRepo messageRepo;
+  private final PlatformTransactionManager txManager;
+  private final String toolName;
+  private final List<String> messageSourcePropertiesFiles;
+  private final boolean resetMessages;
 
-  @Autowired private ApplicationContext applicationContext;
-
-  @Autowired private MessageRepo messageRepo;
-
-  @Autowired
-  @Qualifier("transactionManager")
-  protected PlatformTransactionManager txManager;
-
-  @Value("${ltitool.toolName}")
-  private String toolName;
-
-  @Value("${ltitool.messageSourcePropertiesFiles:/messages/messages.properties}")
-  private List<String> messageSourcePropertiesFiles;
-
-  @Value("${ltitool.resetMessages:false}")
-  private boolean resetMessages;
+  public MessagePropertiesInsert(
+      ResourceLoader resourceLoader,
+      ApplicationContext applicationContext,
+      MessageRepo messageRepo,
+      @Qualifier("transactionManager") PlatformTransactionManager txManager,
+      @Value("${ltitool.toolName}") String toolName,
+      @Value("${ltitool.messageSourcePropertiesFiles:/messages/messages.properties}")
+          List<String> messageSourcePropertiesFiles,
+      @Value("${ltitool.resetMessages:false}") boolean resetMessages) {
+    this.resourceLoader = resourceLoader;
+    this.applicationContext = applicationContext;
+    this.messageRepo = messageRepo;
+    this.txManager = txManager;
+    this.toolName = toolName;
+    this.messageSourcePropertiesFiles = messageSourcePropertiesFiles;
+    this.resetMessages = resetMessages;
+  }
 
   @PostConstruct
   public void postConstruct() {
@@ -94,7 +100,7 @@ public class MessagePropertiesInsert {
             log.error(
                 "Error while trying to load '{}' file, skipping insert logic",
                 messagePropertiesFile);
-            return;
+            continue;
           }
           String locale = getLocale(messagePropertiesFile);
           Map<String, String> propertiesMap = new HashMap<>();

@@ -5,18 +5,23 @@ import edu.virginia.its.canvas.lti.repos.MessageRepo;
 import java.text.MessageFormat;
 import java.util.Locale;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 @Slf4j
+@Component
 public class DatabaseMessageSource extends ResourceBundleMessageSource {
 
-  @Autowired private MessageRepo messageRepo;
+  private final MessageRepo messageRepo;
+  private final String toolName;
 
-  @Value("${ltitool.toolName}")
-  private String toolName;
+  public DatabaseMessageSource(
+      MessageRepo messageRepo, @Value("${ltitool.toolName}") String toolName) {
+    this.messageRepo = messageRepo;
+    this.toolName = toolName;
+  }
 
   @Override
   public String resolveCodeWithoutArguments(String messageKey, Locale locale) {

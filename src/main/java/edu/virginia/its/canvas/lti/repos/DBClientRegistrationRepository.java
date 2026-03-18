@@ -3,8 +3,6 @@ package edu.virginia.its.canvas.lti.repos;
 import edu.virginia.its.canvas.lti.model.LtiProvider;
 import edu.virginia.its.canvas.lti.model.LtiRegistration;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
@@ -18,18 +16,20 @@ import uk.ac.ox.ctl.lti13.security.oauth2.client.lti.web.LTIAuthorizationGrantTy
 @Slf4j
 public class DBClientRegistrationRepository implements ClientRegistrationRepository {
 
-  @Value("${ltitool.baseUrl}")
-  private String baseUrl;
-
-  @Value("${server.servlet.context-path:}")
-  private String contextPath;
-
-  @Value("${ltitool.oauth2.redirectPath:/lti/login}")
-  private String redirectPath;
-
   public static final String OPENID_SCOPE = "openid";
 
-  @Autowired private LtiRegistrationRepository repo;
+  private final String baseUrl;
+  private final String contextPath;
+  private final String redirectPath;
+  private final LtiRegistrationRepository repo;
+
+  public DBClientRegistrationRepository(
+      String baseUrl, String contextPath, String redirectPath, LtiRegistrationRepository repo) {
+    this.baseUrl = baseUrl;
+    this.contextPath = contextPath;
+    this.redirectPath = redirectPath;
+    this.repo = repo;
+  }
 
   @Override
   public ClientRegistration findByRegistrationId(String registrationId) {

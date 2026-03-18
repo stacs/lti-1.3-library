@@ -19,3 +19,5 @@ ltitool:
   baseUrl: https://localhost
   toolName: lti-1.3-library
   messageSourcePropertiesFiles: /messages/messages.properties,/messages/otherMessages.properties
+  oauth2:
+    redirectPath: /lti/login
