@@ -2,7 +2,6 @@ package edu.virginia.its.canvas.lti.config;
 
 import edu.virginia.its.canvas.lti.exception.CanvasTokenException;
 import edu.virginia.its.canvas.lti.util.CanvasAuthenticationToken;
-import edu.virginia.its.canvas.lti.util.Constants;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 import org.springframework.context.annotation.Bean;
@@ -31,12 +30,12 @@ public class AuditConfig {
     @Override
     public Optional<String> getCurrentAuditor() {
       try {
-        String computingId =
-            CanvasAuthenticationToken.getToken().getCustomValue(Constants.USERNAME_CUSTOM_KEY);
+        CanvasAuthenticationToken token = CanvasAuthenticationToken.getToken();
+        String computingId = token.getComputingId();
         if (computingId != null) {
           return Optional.of(computingId);
         } else {
-          return Optional.ofNullable(CanvasAuthenticationToken.getToken().getEmail());
+          return Optional.ofNullable(token.getEmail());
         }
       } catch (CanvasTokenException ex) {
         return Optional.empty();

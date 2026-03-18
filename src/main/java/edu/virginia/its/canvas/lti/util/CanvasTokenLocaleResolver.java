@@ -21,7 +21,8 @@ public class CanvasTokenLocaleResolver extends AbstractLocaleResolver {
         log.warn("Could not find Locale object for locale string '{}'", localeString);
       }
     } catch (CanvasTokenException ex) {
-      log.warn("Could not find Canvas token to determine locale, returning default", ex);
+      log.warn("Could not find Canvas token to determine locale, returning default");
+      log.debug("Could not find Canvas token to determine locale, returning default", ex);
     }
     return getDefaultLocale();
   }
