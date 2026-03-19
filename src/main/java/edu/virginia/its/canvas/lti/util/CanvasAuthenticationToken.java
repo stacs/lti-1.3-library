@@ -2,10 +2,7 @@ package edu.virginia.its.canvas.lti.util;
 
 import com.nimbusds.jose.shaded.gson.internal.LinkedTreeMap;
 import edu.virginia.its.canvas.lti.exception.CanvasTokenException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.security.core.Authentication;
@@ -31,10 +28,10 @@ public class CanvasAuthenticationToken extends OidcAuthenticationToken {
   private final String locale;
   private final String userCanvasId;
   private final String computingId;
-  private final Boolean isRootAccountAdmin;
+  private final boolean isRootAccountAdmin;
   private final String canvasMembershipRoles;
   private final String timezone;
-  private final Boolean isStudentView;
+  private final boolean isStudentView;
   private final String contextTitle;
   private final String postMessageToken;
   private final String canvasApiBaseUrl;
@@ -44,7 +41,7 @@ public class CanvasAuthenticationToken extends OidcAuthenticationToken {
   private final String courseSisId;
   private final List<String> courseSectionCanvasIds;
   private final List<String> courseSectionSisIds;
-  private final Boolean isSectionRestricted;
+  private final boolean isSectionRestricted;
   private final String courseGradingScheme;
   private final String accountCanvasId;
   private final String accountName;
@@ -88,103 +85,33 @@ public class CanvasAuthenticationToken extends OidcAuthenticationToken {
         Optional.ofNullable(attributes.get(Constants.LOCALE_ATTRIBUTE))
             .map(Object::toString)
             .orElse(null);
-    this.userCanvasId =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_USER_ID))
-            .map(Object::toString)
-            .orElse(null);
-    this.computingId =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_USER_LOGINID))
-            .map(Object::toString)
-            .orElse(null);
+    this.userCanvasId = getCustomValue(Constants.CANVAS_USER_ID_CUSTOM_KEY);
+    this.computingId = getCustomValue(Constants.CANVAS_USER_LOGINID_CUSTOM_KEY);
     this.isRootAccountAdmin =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_USER_ISROOTACCOUNTADMIN))
-            .map(Object::toString)
-            .map(Boolean::valueOf)
-            .orElse(null);
-    this.canvasMembershipRoles =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_ROLES))
-            .map(Object::toString)
-            .orElse(null);
-    this.timezone =
-        Optional.ofNullable(attributes.get(Constants.PERSON_ADDRESS_TIMEZONE))
-            .map(Object::toString)
-            .orElse(null);
-    this.isStudentView =
-        Optional.ofNullable(attributes.get(Constants.USER_STUDENT_VIEW))
-            .map(Object::toString)
-            .map(Boolean::valueOf)
-            .orElse(null);
-    this.contextTitle =
-        Optional.ofNullable(attributes.get(Constants.CONTEXT_TITLE))
-            .map(Object::toString)
-            .orElse(null);
-    this.postMessageToken =
-        Optional.ofNullable(attributes.get(Constants.POST_MESSAGE_TOKEN))
-            .map(Object::toString)
-            .orElse(null);
-    this.canvasApiBaseUrl =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_API_BASE_URL))
-            .map(Object::toString)
-            .orElse(null);
-    this.canvasApiDomain =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_API_DOMAIN))
-            .map(Object::toString)
-            .orElse(null);
-    this.courseCanvasId =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_COURSE_ID))
-            .map(Object::toString)
-            .orElse(null);
-    this.courseName =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_COURSE_NAME))
-            .map(Object::toString)
-            .orElse(null);
-    this.courseSisId =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_COURSE_SISID))
-            .map(Object::toString)
-            .orElse(null);
+        getCustomBooleanValue(Constants.CANVAS_USER_ISROOTACCOUNTADMIN_CUSTOM_KEY);
+    this.canvasMembershipRoles = getCustomValue(Constants.CANVAS_ROLES_CUSTOM_KEY);
+    this.timezone = getCustomValue(Constants.PERSON_ADDRESS_TIMEZONE_CUSTOM_KEY);
+    this.isStudentView = getCustomBooleanValue(Constants.USER_STUDENT_VIEW_CUSTOM_KEY);
+    this.contextTitle = getCustomValue(Constants.CONTEXT_TITLE_CUSTOM_KEY);
+    this.postMessageToken = getCustomValue(Constants.POST_MESSAGE_TOKEN_CUSTOM_KEY);
+    this.canvasApiBaseUrl = getCustomValue(Constants.CANVAS_API_BASE_URL_CUSTOM_KEY);
+    this.canvasApiDomain = getCustomValue(Constants.CANVAS_API_DOMAIN_CUSTOM_KEY);
+    this.courseCanvasId = getCustomValue(Constants.CANVAS_COURSE_ID_CUSTOM_KEY);
+    this.courseName = getCustomValue(Constants.CANVAS_COURSE_NAME_CUSTOM_KEY);
+    this.courseSisId = getCustomValue(Constants.CANVAS_COURSE_SISID_CUSTOM_KEY);
     this.courseSectionCanvasIds =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_COURSE_SECTION_IDS))
-            .map(Object::toString)
-            .map(s -> Arrays.asList(s.split(",")))
-            .orElse(null);
+        getCustomListValue(Constants.CANVAS_COURSE_SECTION_IDS_CUSTOM_KEY);
     this.courseSectionSisIds =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_COURSE_SECTION_SISIDS))
-            .map(Object::toString)
-            .map(s -> Arrays.asList(s.split(",")))
-            .orElse(null);
+        getCustomListValue(Constants.CANVAS_COURSE_SECTION_SISIDS_CUSTOM_KEY);
     this.isSectionRestricted =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_COURSE_SECTIONRESTRICTED))
-            .map(Object::toString)
-            .map(Boolean::valueOf)
-            .orElse(null);
-    this.courseGradingScheme =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_COURSE_GRADINGSCHEME))
-            .map(Object::toString)
-            .orElse(null);
-    this.accountCanvasId =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_ACCOUNT_ID))
-            .map(Object::toString)
-            .orElse(null);
-    this.accountName =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_ACCOUNT_NAME))
-            .map(Object::toString)
-            .orElse(null);
-    this.accountSisId =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_ACCOUNT_SISID))
-            .map(Object::toString)
-            .orElse(null);
-    this.rootAccountCanvasId =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_ROOTACCOUNT_ID))
-            .map(Object::toString)
-            .orElse(null);
-    this.termCanvasId =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_TERM_ID))
-            .map(Object::toString)
-            .orElse(null);
-    this.termName =
-        Optional.ofNullable(attributes.get(Constants.CANVAS_TERM_NAME))
-            .map(Object::toString)
-            .orElse(null);
+        getCustomBooleanValue(Constants.CANVAS_COURSE_SECTIONRESTRICTED_CUSTOM_KEY);
+    this.courseGradingScheme = getCustomValue(Constants.CANVAS_COURSE_GRADINGSCHEME_CUSTOM_KEY);
+    this.accountCanvasId = getCustomValue(Constants.CANVAS_ACCOUNT_ID_CUSTOM_KEY);
+    this.accountName = getCustomValue(Constants.CANVAS_ACCOUNT_NAME_CUSTOM_KEY);
+    this.accountSisId = getCustomValue(Constants.CANVAS_ACCOUNT_SISID_CUSTOM_KEY);
+    this.rootAccountCanvasId = getCustomValue(Constants.CANVAS_ROOTACCOUNT_ID_CUSTOM_KEY);
+    this.termCanvasId = getCustomValue(Constants.CANVAS_TERM_ID_CUSTOM_KEY);
+    this.termName = getCustomValue(Constants.CANVAS_TERM_NAME_CUSTOM_KEY);
   }
 
   public String getCustomValue(String customKey) {
@@ -197,6 +124,19 @@ public class CanvasAuthenticationToken extends OidcAuthenticationToken {
       }
     }
     return null;
+  }
+
+  public boolean getCustomBooleanValue(String customKey) {
+    String value = getCustomValue(customKey);
+    return Boolean.parseBoolean(value);
+  }
+
+  public List<String> getCustomListValue(String customKey) {
+    String value = getCustomValue(customKey);
+    if (value == null) {
+      return new ArrayList<>();
+    }
+    return Arrays.asList(value.split(","));
   }
 
   public static CanvasAuthenticationToken getToken() {
