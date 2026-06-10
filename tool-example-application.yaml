@@ -1,0 +1,99 @@
+# =============================================================================
+# Example application.yaml for an LTI 1.3 tool built on lti-1.3-library.
+#
+# Copy the parts you need into your tool's src/main/resources/application.yaml.
+# This is a template, not a file the library loads automatically.
+#
+# ${...} placeholders are resolved at startup from environment variables, JVM
+# system properties, or any other Spring property source. ${VAR:default} falls
+# back to "default" when VAR is unset. A literal string, a placeholder, and
+# another literal can all be combined in a single value (see the provider URIs).
+#
+# Externally-injected values used below:
+#
+#   Placeholder           Example env var      Meaning
+#   --------------------  -------------------  --------------------------------------------------
+#   ${toolUrl}            TOOLURL              Public origin of the tool, scheme + host, NO trailing
+#                                              slash. Include any path prefix the tool is served under.
+#                                              e.g. https://my-tool.example.edu
+#   ${lti.clientId}       LTI_CLIENTID         LTI Developer Key "Client ID" (the numeric key id)
+#   ${api.clientId}       API_CLIENTID         API Developer Key "Client ID"
+#   ${api.clientSecret}   API_CLIENTSECRET     API Developer Key "Secret"
+#   ${canvas.baseUrl}     CANVAS_BASEURL       Your institution's Canvas origin, scheme + host, NO
+#                                              path. e.g. https://your-inst.instructure.com
+#   ${canvas.apiUrl}      CANVAS_APIURL        Canvas REST base INCLUDING /api/v1, consumed by your
+#                                              tool's own code (see note at the bottom).
+#                                              e.g. https://your-inst.instructure.com/api/v1
+#
+# =============================================================================
+
+spring:
+  # --- Datasource ------------------------------------------------------------
+  # Required at runtime: the library persists localized messages and uses JPA
+  # auditing, so a datasource must be available.
+  datasource:
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
+
+  security:
+    oauth2:
+      client:
+        registration:
+          # (1) LTI 1.3 launch. Your tool initiates login at /oauth2/authorization/canvas
+          canvas:
+            client-id: ${lti.clientId}
+            client-secret: unused                 # LTI 1.3 keys have no secret; this is a placeholder
+            authorization-grant-type: implicit
+            scope: openid
+            # Must exactly match a "Redirect URIs" entry on the LTI Developer Key.
+            redirect-uri: ${baseUrl}/lti/login
+
+          # (2) Canvas REST API access on behalf of a user (API Developer Key).
+          canvas-api:
+            client-id: ${api.clientId}
+            client-secret: ${api.clientSecret}
+            authorization-grant-type: authorization_code
+            redirect-uri: ${baseUrl}/login/oauth2/code/canvas-api
+            # scope: list the Canvas API scopes here if the API key enforces scopes
+
+        provider:
+          canvas:
+            # Fixed cloud-Canvas LTI platform endpoints. For self-hosted Canvas,
+            # replace sso.canvaslms.com with your Canvas domain. Do NOT set issuer-uri.
+            authorization-uri: https://sso.canvaslms.com/api/lti/authorize_redirect
+            token-uri: https://sso.canvaslms.com/login/oauth2/token
+            jwk-set-uri: https://sso.canvaslms.com/api/lti/security/jwks
+            user-name-attribute: sub
+          canvas-api:
+            # Canvas API OAuth happens on your institution's Canvas domain (NO /api/v1 path),
+            # which is why a path-less ${canvas.baseUrl} is used here rather than ${canvas.apiUrl}.
+            authorization-uri: ${canvas.baseUrl}/login/oauth2/auth
+            token-uri: ${canvas.baseUrl}/login/oauth2/token
+
+# --- Library settings --------------------------------------------------------
+ltitool:
+  # Required. Identifies this tool; used as the key under which localized
+  # messages are stored and looked up.
+  toolName: my-tool
+  # Optional. Comma-separated message bundles loaded into the DB on startup.
+  # Defaults to /messages/messages.properties.
+  messageSourcePropertiesFiles: /messages/messages.properties
+  # Optional. Re-seed messages from the bundles above on every startup. Default false.
+  resetMessages: false
+  # Optional. Comma-separated allow-list of user emails. Empty = no restriction.
+  allowedUserEmails: ""
+
+# -----------------------------------------------------------------------------
+# Your tool's Canvas REST API base URL (${canvas.apiUrl}, e.g.
+# https://your-inst.instructure.com/api/v1) is consumed by YOUR code, not by
+# this library or by Spring's OAuth2 config. Read it directly where you build
+# Canvas API requests, e.g.:
+#
+#   @Value("${canvas.apiUrl}")
+#   private String canvasApiUrl;
+#
+# It is intentionally NOT redeclared here — referencing a property by its own
+# name in YAML (canvas.apiUrl: ${canvas.apiUrl}) is a circular placeholder and
+# fails to resolve. Just inject CANVAS_APIURL into the environment.
+# -----------------------------------------------------------------------------
