@@ -4,15 +4,12 @@
     <parent>
         <groupId>edu.virginia.its.lts</groupId>
         <artifactId>parent-pom</artifactId>
-        <version>3.5.14</version>
+        <version>4.1.1-SNAPSHOT</version>
     </parent>
     <artifactId>lti-13-library</artifactId>
     <version>4.0.0-SNAPSHOT</version>
     <name>lti-1.3-library</name>
     <description>lti-1.3-library</description>
-    <properties>
-        <java.version>21</java.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -20,7 +17,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+            <artifactId>spring-boot-starter-security-oauth2-client</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -28,7 +25,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -36,9 +33,9 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>uk.ac.ox.ctl</groupId>
+            <groupId>edu.virginia.its.lts</groupId>
             <artifactId>spring-security-lti13</artifactId>
-            <version>0.3.4</version>
+            <version>0.4.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>edu.virginia.its.lts</groupId>
