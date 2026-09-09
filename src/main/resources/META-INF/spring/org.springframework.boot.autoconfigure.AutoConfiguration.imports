@@ -1,1 +1,2 @@
 edu.virginia.its.canvas.lti.LtiConfig
+edu.virginia.its.canvas.lti.config.JdbcSessionAutoConfiguration
