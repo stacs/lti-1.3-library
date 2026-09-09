@@ -1,9 +1,9 @@
 package edu.virginia.its.canvas.lti.roles;
 
-import com.nimbusds.jose.shaded.gson.internal.LinkedTreeMap;
 import edu.virginia.its.canvas.lti.util.Constants;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,7 +31,7 @@ public class CanvasRoleMapper implements GrantedAuthoritiesMapper {
     for (GrantedAuthority authority : authorities) {
       OidcUserAuthority userAuth = (OidcUserAuthority) authority;
       Object customClaims = userAuth.getAttributes().get(Claims.CUSTOM);
-      if (customClaims instanceof LinkedTreeMap map) {
+      if (customClaims instanceof Map<?, ?> map) {
         Object enrollmentRolesObject = map.get(Constants.CANVAS_ROLES_CUSTOM_KEY);
         if (enrollmentRolesObject instanceof String enrollmentRoles
             && !ObjectUtils.isEmpty(enrollmentRoles)) {
