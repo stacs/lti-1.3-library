@@ -2,6 +2,29 @@
 
 This project contains a number of classes that can help with ease of development when creating a LTI 1.3 Tool in Java using Spring Boot.
 
+## LTI Private Key
+
+The tool's RSA private key is used to sign messages it sends to Canvas, and is supplied through
+the `ltitool.privateKey` property. The matching public key is served at
+`/.well-known/jwks.json`, and the app will not start without a valid key.
+
+### Generating a key
+
+```bash
+openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out private-key.pem
+```
+
+This creates a PEM-encoded PKCS#8 private key. Supply the file's full contents, including the
+`BEGIN`/`END` lines, as `ltitool.privateKey`, using whatever secret management your deployment
+environment provides.
+
+### Notes
+
+- **Never commit a real key.**
+- **Use a different key for each environment.**
+- **Your tool's tests need a key too**, since the app won't start without one. A small test-only
+  key in `src/test/resources` is enough (this library's own tests use a 512-bit one).
+
 ## Configuring client registration
 
 An implementing tool declares its LTI client registration in its own `application.yaml` using the
@@ -53,9 +76,6 @@ relative to your tool's base URL / context path):
   the `canvas-json-config` library). You can hand this URL to a Canvas admin so the developer key
   fields are filled in automatically instead of by hand.
 
-> The bundled `JwksController` generates an in-memory keypair on startup and logs a warning — it is
-> only suitable for local development. In production, supply a stable keypair.
-
 ## Step 1 — Create the LTI Developer Key in Canvas
 
 The LTI key is what enables LTI 1.3 launches into your tool.
@@ -78,9 +98,9 @@ The LTI key is what enables LTI 1.3 launches into your tool.
 6. Deploy the tool (**Settings → Apps**, or via the key) at the account or course level. Canvas
    then issues a **Deployment ID**; record it if your tool needs to distinguish deployments.
 
-> LTI 1.3 keys do **not** give you a client secret — your tool proves its identity with the keypair
-> behind its Public JWK URL, not a shared secret. The `client-secret` in `application.yaml` is only
-> a placeholder Spring requires.
+> LTI 1.3 keys do **not** give you a client secret — your tool proves its identity with its private
+> key, whose public half Canvas reads from the Public JWK URL. The `client-secret` in
+> `application.yaml` is only a placeholder Spring requires.
 
 ### Canvas platform endpoints
 
@@ -154,7 +174,7 @@ spring:
 In addition to the LTI key, this version of the library **requires** an API Developer Key so the
 tool can call the **Canvas REST API** (e.g. `GET /api/v1/courses`) on behalf of a user. (The LTI key
 on its own covers launches and LTI Advantage services — Names & Roles, Assignment & Grades — which
-authenticate using that same Client ID and your tool's keypair, but not the general REST API.)
+authenticate using that same Client ID and your tool's private key, but not the general REST API.)
 
 1. In Canvas, open **Admin → Developer Keys → + Developer Key → + API Key**.
 2. Set:
