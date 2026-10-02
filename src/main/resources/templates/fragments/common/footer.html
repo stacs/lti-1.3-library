@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="footer">
+    <style>
+        .uva-lti-footer {
+            box-sizing: border-box;
+            padding: 1em 6px;
+            background: #232d4b;
+            width: 100%;
+            border-radius: 8px;
+            font-family: 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.8em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .uva-lti-footer a, .uva-lti-footer a:link, .uva-lti-footer a:visited {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .uva-lti-footer a:hover {
+            text-decoration: underline;
+        }
+        .uva-lti-footer ul {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .uva-lti-footer li {
+            display: flex;
+            align-items: center;
+            padding: 0 1em;
+            border-left: 1px solid #ccc;
+        }
+        .uva-lti-footer li:first-child {
+            border: none;
+        }
+        .uva-lti-footer-text {
+            color: white;
+        }
+    </style>
+    <footer class="uva-lti-footer">
+        <ul>
+            <li><a th:href="#{footer.tool-help.href}" th:text="#{footer.tool-help.text}" target="_blank"></a></li>
+            <li><a th:href="#{footer.lts-support.href}" th:text="#{footer.lts-support.text}" target="_blank"></a></li>
+            <li><a th:href="#{footer.report-a-barrier.href}" th:text="#{footer.report-a-barrier.text}" target="_blank"></a></li>
+        </ul>
+        <span class="uva-lti-footer-text" th:text="#{footer.lts.text}"></span>
+    </footer>
+</th:block>
+</html>

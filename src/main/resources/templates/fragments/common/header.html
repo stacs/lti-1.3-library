@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="header">
+    <style>
+        .uva-lti-header {
+            height: 56px;
+            padding: 0 20px;
+            background: #232D4B;
+            box-sizing: border-box;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .uva-lti-header-name {
+            font-size: 1em;
+            color: white;
+            font-family: 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+        }
+    </style>
+    <header class="uva-lti-header">
+        <h1 class="uva-lti-header-name" th:text="#{header.toolName}"></h1>
+    </header>
+</th:block>
+</html>
