@@ -4,7 +4,7 @@
     <parent>
         <groupId>edu.virginia.its.lts</groupId>
         <artifactId>parent-pom</artifactId>
-        <version>4.1.1-SNAPSHOT</version>
+        <version>4.1.1</version>
     </parent>
     <artifactId>lti-13-library</artifactId>
     <version>4.0.0-SNAPSHOT</version>
@@ -39,7 +39,7 @@
         <dependency>
             <groupId>edu.virginia.its.lts</groupId>
             <artifactId>spring-security-lti13</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
+            <version>0.4.0</version>
         </dependency>
         <dependency>
             <groupId>edu.virginia.its.lts</groupId>
