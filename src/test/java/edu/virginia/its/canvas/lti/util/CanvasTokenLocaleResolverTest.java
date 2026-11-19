@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.Authentication;
@@ -31,6 +32,11 @@ class CanvasTokenLocaleResolverTest {
     response = mock(HttpServletResponse.class);
     securityContext = mock(SecurityContext.class);
     SecurityContextHolder.setContext(securityContext);
+  }
+
+  @AfterEach
+  void tearDown() {
+    SecurityContextHolder.clearContext();
   }
 
   @Test
